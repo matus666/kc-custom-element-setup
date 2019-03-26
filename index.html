@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Date picker custom element</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="style.css">
+  <script src="js.js"></script>
+
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  <script src="https://app.kenticocloud.com/js-api/custom-element.js"></script>
+</head>
+
+<body>
+  <p>Date: <input type="text" id="datepicker"/></p>
+  <script>
+    $(function () {
+      var isDisabled = false;
+      var value = "10/12/2012";
+
+
+      
+      function update() {
+        $("#datepicker").datepicker();
+        $("#datepicker").datepicker("setDate", value);
+        $("#datepicker").datepicker("option", "disabled", isDisabled);
+      }
+
+      CustomElement.init((element, context) => {
+        value = element.value;
+        isDisabled = element.disabled;
+        CustomElement.setHeight(300);;
+
+        update();
+      });
+    });
+  </script>
+</body>
+
+</html>
