@@ -17,26 +17,31 @@
 </head>
 
 <body>
-  <p>Date: <input type="text" id="datepicker"/></p>
+  <p>Date: <input type="text" id="datepicker" /></p>
   <script>
     $(function () {
-      var isDisabled = false;
       var value = "10/12/2012";
-
-
       
-      function update() {
-        $("#datepicker").datepicker();
+      function setDatePicker() {
+        $("#datepicker").datepicker({
+          onSelect: function (dateText, inst) {
+            CustomElement.setValue(dateText);
+          }
+        });
         $("#datepicker").datepicker("setDate", value);
-        $("#datepicker").datepicker("option", "disabled", isDisabled);
+      }
+
+      function updateDisabled(disabled) {
+        console.log(disabled);
+        $("#datepicker").datepicker("option", "disabled", disabled);
       }
 
       CustomElement.init((element, context) => {
         value = element.value;
-        isDisabled = element.disabled;
-        CustomElement.setHeight(300);;
-
-        update();
+        CustomElement.setHeight(300);
+        setDatePicker();
+        updateDisabled(element.disabled);
+        CustomElement.onDisabledChanged(updateDisabled);
       });
     });
   </script>
